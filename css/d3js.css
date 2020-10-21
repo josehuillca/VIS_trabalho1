@@ -1,0 +1,15 @@
+circle {
+    stroke-width: 1px;
+    stroke: dimgray;
+}
+
+/* Tipos de Graficos */
+.scrolling-wrapper{
+	overflow-x: auto;
+}
+img {
+    cursor: pointer;
+}
+img:hover {
+    box-shadow:0px 0px 5px #000;
+}
