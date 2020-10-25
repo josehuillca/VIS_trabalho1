@@ -13,3 +13,39 @@ img {
 img:hover {
     box-shadow:0px 0px 5px #000;
 }
+
+ /*  Bar Chart  */
+ .rectangle:hover {
+     opacity: 0.66;
+ }
+
+ /* Line chart */
+ .line-path {
+    fill: none;
+    stroke: maroon;
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+  
+  text {
+    font-family: sans-serif;
+  }
+  
+  .tick text {
+    font-size: 1.7em;
+    fill: #635F5D;
+  }
+  
+  .tick line {
+    stroke: #C0C0BB;
+  }
+  
+  .axis-label {
+    font-size: 2em;
+    fill: #8E8883;
+  }
+  
+  .title {
+    font-size: 1.7em;
+    fill: #635F5D;
+  }

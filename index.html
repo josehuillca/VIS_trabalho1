@@ -23,16 +23,16 @@
 
                 <!-- Choose a Dataset -->
                 <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect02">
-                      <option selected>Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select class="custom-select" id="inputGroupSelect01" onchange="getDataset(this)">
+                      <option value="0" selected>Choose...</option>
+                      <option value="../assets/datasets/alphabet.csv">Alphabet</option>
+                      <option value="../assets/datasets/superstore.csv">Superstore</option>
+                      <option value="../assets/datasets/us-population-state-age.csv">US-Population</option>
                     </select>
                     <div class="input-group-append">
                       <label class="input-group-text" for="inputGroupSelect02">Datasets</label>
                     </div>
-                    <span class="text-muted">Choose a dataset ...</span>
+                    <span class="text-muted" id="span-dataset-choose">Choose a dataset ...</span>
                 </div>
 
                 <!-- Tipos de Graficos -->
@@ -163,5 +163,5 @@
         </div>
     </div>
 </body>
-<script src="js/d3js.js"></script>
+<script type="module" src="js/main.js"></script>
 </html>
