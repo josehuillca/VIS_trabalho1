@@ -16,11 +16,7 @@ async function getDatasetModule(selectObject) {
       await dados.loadCSV(value);
       chart.setData(dados.getData());
       let svg = base.getSvg();
-      let scales = chart.createScales(true);
-      //base.createAxis(scales[0], scales[1], true);
       chart.updateChart(svg);
-
-      console.log('updateBar')
     }
     else {
       main(value);
@@ -57,6 +53,8 @@ function setConfigurationInput(config, xLabel, yLabel) {
 }
 
 function selectTypeChart(typeChart) {
+  currrentChart = typeChart;
+
   if (base.removeSvg()) {
     base.createSvg();
     base.createMargins();
@@ -71,11 +69,12 @@ function selectTypeChart(typeChart) {
     chart = new Line(dados.getData(), base.getConfig());
   }
 
-  let scales = chart.createScales();
-  base.createAxis(scales[0], scales[1]);
+  //let scales = chart.createScales();
+  //base.createAxis(scales[0], scales[1]);
   base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
   let svg = base.getSvg();
-  chart.render(svg);
+  chart.initializeAxis(svg)
+  chart.updateChart(svg);
 }
 
 // -------------- OnClickEvents -----------------
@@ -114,12 +113,13 @@ window.configButtomDiv = function configButtomDiv(selectObject) {
       bottom: parseInt($('#bottomID').val()), 
       right: parseInt($('#rightID').val())
     };
-    let xlabel = $('#xlabelID').val();
-    let ylabel = $('#ylabelID').val();
+    //let xlabel = $('#xlabelID').val();
+    //let ylabel = $('#ylabelID').val();
     
-    base.removeSvg();
+    //base.removeSvg();
     base.setConfig(confsvg);
-    base.createSvg();
+    selectTypeChart(currrentChart);
+    /*base.createSvg();
     base.createMargins();
 
     let scales = chart.setConfigAndScales(confsvg);
@@ -127,7 +127,7 @@ window.configButtomDiv = function configButtomDiv(selectObject) {
     base.createAxisLabel(xlabel, ylabel, 'Title');
 
     let svg = base.getSvg();
-    chart.render(svg);
+    chart.render(svg);*/
   }
 }
 
@@ -136,8 +136,8 @@ window.configButtomDiv = function configButtomDiv(selectObject) {
 async function main(selectObject) {
   let confsvg = {
     div: '#main', 
-    width: 800, 
-    height: 600, 
+    width: 600, 
+    height: 400, 
     top: 30, 
     left: 150, 
     bottom: 30, 
@@ -160,3 +160,4 @@ async function main(selectObject) {
 let dados = new Dados();
 let base = null;
 let chart = null;
+let currrentChart = null;

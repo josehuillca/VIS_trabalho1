@@ -28,6 +28,10 @@ export class Line {
   setData(data){
     this.data = data;
   }
+  setConfigAndScales(config) {
+    this.config = config;
+    return this.createScales()
+  }
 
   updateChart(svg){
     let lineGenerator = d3.line()
