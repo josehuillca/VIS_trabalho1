@@ -14,7 +14,7 @@ async function getDatasetModule(selectObject) {
     if (dados.is_load()) {  
       // Load new data
       await dados.loadCSV(value);
-      chart.setData(dados.getData());
+      chart.setData(dados.getData(ini, fin));
       let svg = base.getSvg();
       chart.updateChart(svg);
     }
@@ -60,25 +60,50 @@ function selectTypeChart(typeChart) {
     base.createMargins();
   }
   if (typeChart==='bar'){
-    chart = new Bar(dados.getData(), base.getConfig());
+    ini = 0;
+    fin = 50;
+    chart = new Bar(dados.getData(ini, fin), base.getConfig());
+    base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
+    let svg = base.getSvg();
+    chart.initializeAxis(svg);
+    chart.updateChart(svg);
   }
   if (typeChart==='scatter'){
-    chart = new Scatterplot(dados.getData(), base.getConfig());
+    ini = 0;
+    fin = 400;
+    chart = new Scatterplot(dados.getData(ini, fin), base.getConfig());
+    base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
+    let svg = base.getSvg();
+    chart.initializeAxis(svg);
+    chart.updateChart(svg);
   }
   if (typeChart==='line'){
-    chart = new Line(dados.getData(), base.getConfig());
+    ini = 40;
+    fin = 400;
+    chart = new Line(dados.getData(ini, fin), base.getConfig());
+    base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
+    let svg = base.getSvg();
+    chart.initializeAxis(svg);
   }
 
-  base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
-  let svg = base.getSvg();
-  chart.initializeAxis(svg)
-  chart.updateChart(svg);
+  
 }
 
 // -------------- OnClickEvents -----------------
 window.getDataset = function getDataset(selectObject) {
   getDatasetModule(selectObject);
 }
+
+window.changeDadosColumna = function changeDadosColumna(selectObject){
+  if (currrentChart==='line') {
+    let value = selectObject.value;
+    chart.updateChart(value)
+  }
+  else {
+    $( "div.warning2" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+  }
+}
+
 window.barChartDiv = function barChartDiv(selectObject) {
   if (setColorTypeChart(selectObject)) {
     $('#typechartID').text('Gráfico de barras.');
@@ -133,12 +158,12 @@ async function main(selectObject) {
   // Load data
   await dados.loadCSV(selectObject);
   
-  base = new Base(confsvg, dados.getData());
+  base = new Base(confsvg);
 
   // Bar-chart load by default
   $('#typechartID').text('Gráfico de barras.');
   $("div.barchart").css('border-color', '#f39c12');
-  selectTypeChart('line')
+  selectTypeChart('bar')
 }
 
 // ------ Global Variables ----
@@ -146,3 +171,5 @@ let dados = new Dados();
 let base = null;
 let chart = null;
 let currrentChart = 'null';
+let ini=0; // Slice data
+let fin=30; // Slice data

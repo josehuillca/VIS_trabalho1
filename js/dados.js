@@ -5,7 +5,7 @@ export class Dados {
     this.data = [];
 
     this.load_data = false;
-    this.slice = 30;
+    this.slice = 360;
   }
 
   is_load() {
@@ -18,16 +18,16 @@ export class Dados {
         cx: +d.horsepower,
         cy: +d.weight,
         cx_line: +d.year,
+        name: d.Origin,
         col: 4
       }
     });
-    this.data = this.data.slice(0, this.slice);
     this.load_data = true;
   }
 
 
-  getData() {
-    return this.data;
+  getData(ini=0, fin=30) {
+    return this.data.slice(ini, fin);
   }
   
 }

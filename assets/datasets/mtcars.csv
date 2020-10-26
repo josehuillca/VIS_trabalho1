@@ -1,4 +1,4 @@
-mpg,cylinders,displacement,horsepower,weight,acceleration,year,origin,name
+mpg,cylinders,displacement,horsepower,weight,acceleration,year,Origin,name
 23,6,198,95,2904,16,1973,USA,plymouth duster
 26,4,97,46,1950,21,1974,Germany,volkswagen super beetle
 11,8,400,150,4997,14,1975,USA,chevrolet impala

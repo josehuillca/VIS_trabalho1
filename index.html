@@ -28,7 +28,6 @@
                       <option value="0" selected>Choose...</option>
                       <option value="../assets/datasets/mtcars.csv">Cars-1</option>
                       <option value="../assets/datasets/cars-2.csv">Cars-2</option>
-                      <option value="../assets/datasets/us-population-state-age.csv">US-Population</option>
                     </select>
                     <div class="input-group-append">
                       <label class="input-group-text" for="inputGroupSelect02">Datasets</label>
@@ -64,8 +63,9 @@
                 <span class="text-muted">Configure seus valores</span>
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label" for="inlineFormCustomSelectPref">Columna</label>
-                    <select class="custom-select col-sm-7" id="column_chart"></select>
+                    <select class="custom-select col-sm-7" id="column_chart" onchange="changeDadosColumna(this)"></select>
                 </div>
+                <div class="alert-box warning2">Apenas habilitado para gráfico de linha ...</div>
 
                 <!-- Configuração do gráfico -->
                 <h5><span class="badge badge-secondary">3</span>Configuração</h5>
@@ -168,7 +168,5 @@
         </div>
     </div>
 </body>
-<script src="js/line_chart.js"></script>
-<!-- Color Scale -->
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script type='module' src="js/main.js"></script>
 </html>

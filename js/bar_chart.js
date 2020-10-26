@@ -9,24 +9,6 @@ export class Bar {
             this.yAxis = null
       }
 
-      setConfigAndScales(config) {
-            this.config = config;
-            return this.createScales()
-      }
-
-      /*createScales() {
-            this.xScale = d3.scaleBand()
-                  .domain(d3.range(this.data.length))
-                  .range([this.config.left, this.config.width - this.config.right])
-                  .padding(0.1);
-
-            this.yScale = d3.scaleLinear()
-                  .domain([0, d3.max(this.data, d => d.cy)]).nice()
-                  .range([this.config.height - this.config.bottom, this.config.top]) 
-            
-            return [this.xScale, this.yScale, null];  
-      }*/
-
       setData(data){
             this.data = data;
       }
