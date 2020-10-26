@@ -17,6 +17,7 @@ export class Dados {
       return {
         cx: +d.horsepower,
         cy: +d.weight,
+        cx_line: +d.year,
         col: 4
       }
     });

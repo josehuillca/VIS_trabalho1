@@ -69,8 +69,6 @@ function selectTypeChart(typeChart) {
     chart = new Line(dados.getData(), base.getConfig());
   }
 
-  //let scales = chart.createScales();
-  //base.createAxis(scales[0], scales[1]);
   base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
   let svg = base.getSvg();
   chart.initializeAxis(svg)
@@ -113,21 +111,8 @@ window.configButtomDiv = function configButtomDiv(selectObject) {
       bottom: parseInt($('#bottomID').val()), 
       right: parseInt($('#rightID').val())
     };
-    //let xlabel = $('#xlabelID').val();
-    //let ylabel = $('#ylabelID').val();
-    
-    //base.removeSvg();
     base.setConfig(confsvg);
     selectTypeChart(currrentChart);
-    /*base.createSvg();
-    base.createMargins();
-
-    let scales = chart.setConfigAndScales(confsvg);
-    base.createAxis(scales[0], scales[1]);
-    base.createAxisLabel(xlabel, ylabel, 'Title');
-
-    let svg = base.getSvg();
-    chart.render(svg);*/
   }
 }
 
@@ -153,11 +138,11 @@ async function main(selectObject) {
   // Bar-chart load by default
   $('#typechartID').text('Gráfico de barras.');
   $("div.barchart").css('border-color', '#f39c12');
-  selectTypeChart('bar')
+  selectTypeChart('line')
 }
 
 // ------ Global Variables ----
 let dados = new Dados();
 let base = null;
 let chart = null;
-let currrentChart = null;
+let currrentChart = 'null';
