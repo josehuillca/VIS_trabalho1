@@ -1,6 +1,13 @@
-circle {
+.circle {
     stroke-width: 1px;
-    stroke: dimgray;
+    stroke: whitesmoke;
+}
+
+.warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  display: none;
 }
 
 /* Tipos de Graficos */
@@ -21,31 +28,31 @@ img:hover {
 
  /* Line chart */
  .line-path {
-    fill: none;
-    stroke: maroon;
-    stroke-width: 3;
-    stroke-linejoin: round;
-  }
-  
-  text {
-    font-family: sans-serif;
-  }
-  
-  .tick text {
-    font-size: 1.7em;
-    fill: #635F5D;
-  }
-  
-  .tick line {
-    stroke: #C0C0BB;
-  }
-  
-  .axis-label {
-    font-size: 2em;
-    fill: #8E8883;
-  }
-  
-  .title {
-    font-size: 1.7em;
-    fill: #635F5D;
-  }
+  fill: none;
+  stroke: maroon;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+text {
+  font-family: sans-serif;
+}
+
+.tick text {
+  font-size: 1.7em;
+  fill: #635F5D;
+}
+
+.tick line {
+  stroke: #C0C0BB;
+}
+
+.axis-label {
+  font-size: 2em;
+  fill: #8E8883;
+}
+
+.title {
+  font-size: 1.7em;
+  fill: #635F5D;
+}

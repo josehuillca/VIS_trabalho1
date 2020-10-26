@@ -1,95 +1,54 @@
+export class Scatterplot {
+  constructor(data, config) {
+    this.config = config;
+    this.data = data;
 
-  const width = 800;
-  const height = 600;
-  const margin = { top: 60, right: 40, bottom: 88, left: 105 };
-  const svg = d3.select('#main')
-      .append("svg")
-      .attr('width', width - margin.left - margin.right)
-      .attr('height', height - margin.top - margin.bottom)
-      .attr('viewBox', [0, 0, width, height]);
-  
- 
-  
-  const render = data => {
-    const title = 'Cars: Horsepower vs. Weight';
+    this.xScale = null;
+    this.yScale = null;
+    this.colScale = null;
+
+    this.circleRadius = 10;
+  }
+
+  createScales() {
+    let xValue = d => d.cx;
+    let yValue = d => d.cy
     
-    const xValue = d => d.horsepower;
-    const xAxisLabel = 'Horsepower';
-    
-    const yValue = d => d.weight;
-    const circleRadius = 10;
-    const yAxisLabel = 'Weight';
-    
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-    
-    const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, xValue))
-      .range([0, innerWidth])
+    this.xScale = d3.scaleLinear()
+      .domain(d3.extent(this.data, xValue))
+      .range([this.config.left, this.config.width - this.config.right])
       .nice();
     
-    const yScale = d3.scaleLinear()
-      .domain(d3.extent(data, yValue))
-      .range([innerHeight, 0])
-      .nice();
+    this.yScale = d3.scaleLinear()
+      .domain(d3.extent(this.data, yValue))
+      .range([this.config.height - this.config.bottom, this.config.top])
+      .nice(); 
     
-    const g = svg.append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
-    
-    const xAxis = d3.axisBottom(xScale)
-      .tickSize(-innerHeight)
-      .tickPadding(15);
-    
-    const yAxis = d3.axisLeft(yScale)
-      .tickSize(-innerWidth)
-      .tickPadding(10);
-    
-    const yAxisG = g.append('g').call(yAxis);
-    yAxisG.selectAll('.domain').remove();
-    
-    yAxisG.append('text')
-        .attr('class', 'axis-label')
-        .attr('y', -93)
-        .attr('x', -innerHeight / 2)
-        .attr('fill', 'black')
-        .attr('transform', `rotate(-90)`)
-        .attr('text-anchor', 'middle')
-        .text(yAxisLabel);
-    
-    const xAxisG = g.append('g').call(xAxis)
-      .attr('transform', `translate(0,${innerHeight})`);
-    
-    xAxisG.select('.domain').remove();
-    
-    xAxisG.append('text')
-        .attr('class', 'axis-label')
-        .attr('y', 75)
-        .attr('x', innerWidth / 2)
-        .attr('fill', 'black')
-        .text(xAxisLabel);
-    
-    g.selectAll('circle').data(data)
-      .enter().append('circle')
-        .attr('cy', d => yScale(yValue(d)))
-        .attr('cx', d => xScale(xValue(d)))
-        .attr('r', circleRadius);
-    
-    g.append('text')
-        .attr('class', 'title')
-        .attr('y', -10)
-        .text(title);
-  };
-  
-  d3.csv('https://vizhub.com/curran/datasets/auto-mpg.csv')
-    .then(data => {
-      data.forEach(d => {
-        d.mpg = +d.mpg;
-        d.cylinders = +d.cylinders;
-        d.displacement = +d.displacement;
-        d.horsepower = +d.horsepower;
-        d.weight = +d.weight;
-        d.acceleration = +d.acceleration;
-        d.year = +d.year;  
-      });
-      render(data);
-    });
+    return [this.xScale, this.yScale, null];
+  }
+
+  setData(data){
+    this.data = data;
+  }
+
+  updateChart(svg){
+    //Update all rects
+    svg.selectAll("circle")
+      .transition()
+      .delay(function(d,i){return(i*3)})
+      .duration(2000)
+        .attr('cy', d => this.yScale(d.cy))
+        .attr('cx', d => this.xScale(d.cx))
+  }
+
+  render(svg) {
+    svg.append("g")
+    .selectAll("circle")
+    .data(this.data)
+    .join('circle')
+          .attr('cy', d => this.yScale(d.cy))
+          .attr('cx', d => this.xScale(d.cx))
+          .attr('r', this.circleRadius)
+          .attr('class', 'circle');      
+  }
+}

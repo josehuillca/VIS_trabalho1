@@ -10,6 +10,7 @@
 
     <!-- Inclusão da biblioteca d3js -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -25,8 +26,8 @@
                 <div class="input-group mb-3">
                     <select class="custom-select" id="inputGroupSelect01" onchange="getDataset(this)">
                       <option value="0" selected>Choose...</option>
-                      <option value="../assets/datasets/alphabet.csv">Alphabet</option>
-                      <option value="../assets/datasets/superstore.csv">Superstore</option>
+                      <option value="../assets/datasets/mtcars.csv">Cars-1</option>
+                      <option value="../assets/datasets/cars-2.csv">Cars-2</option>
                       <option value="../assets/datasets/us-population-state-age.csv">US-Population</option>
                     </select>
                     <div class="input-group-append">
@@ -37,18 +38,25 @@
 
                 <!-- Tipos de Graficos -->
                 <h5><span class="badge badge-secondary">1</span>Tipos de gráficos</h5>
-                <span class="text-muted">Gráfico de barras</span>
+                <span class="text-muted" id="typechartID">Selecione um gráfico.</span>
                 <div class="scrolling-wrapper row flex-row flex-nowrap mt-2 pb-2">
                     <div class="col-5">
-                        <div class="card"><img src="assets/chart_types/bar_chart.png" alt="Bar Chart" class="img-thumbnail"></div>
+                        <div class="card barchart" onclick='barChartDiv(this)'>
+                            <img src="assets/chart_types/bar_chart.png" alt="Bar Chart" class="img-thumbnail">
+                        </div>
                     </div>
                     <div class="col-5">
-                        <div class="card"><img src="assets/chart_types/scatter_chart.png" alt="Bar Chart" class="img-thumbnail"></div>
+                        <div class="card scatterchart" onclick='scatterChartDiv(this)'>
+                            <img src="assets/chart_types/scatter_chart.png" alt="Bar Chart" class="img-thumbnail">
+                        </div>
                     </div>
                     <div class="col-5">
-                        <div class="card"><img src="assets/chart_types/line_chart.png" alt="Bar Chart" class="img-thumbnail"></div>
+                        <div class="card linechart" onclick='lineChartDiv(this)'>
+                            <img src="assets/chart_types/line_chart.png" alt="Bar Chart" class="img-thumbnail">
+                        </div>
                     </div>
                 </div>
+                <div class="alert-box warning">Primeiro carregue um Dataset !!!</div>
                 </br>
 
                 <!-- Dados -->
@@ -65,95 +73,95 @@
                 <!-- Configuração do gráfico -->
                 <h5><span class="badge badge-secondary">3</span>Configuração</h5>
                 <span class="text-muted">Parâmetros de configuração do gráfico</span>
-                <form>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">W:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Weight" type="number" min="50">
+                
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">W:</div>
                                 </div>
+                                <input class="form-control" id="widthID" placeholder="Weight" type="number" min="50">
                             </div>
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">H:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Height" type="number" min="50">
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">H:</div>
                                 </div>
+                                <input class="form-control" id="heightID" placeholder="Height" type="number" min="50">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <span class="text-muted">Margem:</span>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">B:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Bottom" type="number" min="0">
+                </div>
+                <div class="form-group">
+                    <span class="text-muted">Margem:</span>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">B:</div>
                                 </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">T:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Top" type="number" min="0">
-                                </div>
+                                <input class="form-control" id="bottomID" placeholder="Bottom" type="number" min="0">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">L:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Left" type="number" min="0">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">T:</div>
                                 </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">R:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Right" type="number" min="0">
-                                </div>
+                                <input class="form-control" id="topID" placeholder="Top" type="number" min="0">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <span class="text-muted">Labels:</span>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">X:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="X-axis" type="text">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">L:</div>
                                 </div>
+                                <input class="form-control" id="leftID" placeholder="Left" type="number" min="0">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">Y:</div>
-                                    </div>
-                                    <input class="form-control" placeholder="Y-axis" type="text">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">R:</div>
                                 </div>
+                                <input class="form-control" id="rightID" placeholder="Right" type="number" min="0">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+                <div class="form-group">
+                    <span class="text-muted">Labels:</span>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">X:</div>
+                                </div>
+                                <input class="form-control" id="xlabelID" placeholder="X-axis" type="text">
+                            </div>
                         </div>
                     </div>
-                </form>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Y:</div>
+                                </div>
+                                <input class="form-control" id="ylabelID" placeholder="Y-axis" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                    <button onclick='configButtomDiv(this)' class="btn btn-primary">Configuração</button>
+                    </div>
+                </div>
+                
                 
             </div>
             <div class="col-md-8">
