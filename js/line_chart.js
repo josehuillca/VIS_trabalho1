@@ -97,18 +97,17 @@ var svg = d3.select("#main")
 async function loadCSV(file) {
   let data_ = await d3.csv(file, d => {
     return {
-      year: d.year,
-      sex: d.sex,
-      name: d.name,
-      n: +d.n
+      cx: d.year,
+      cy: +d.weight,
+      name: d.Origin
     }
   });
-  //data_ = data_.slice(0, 100);
+  data_ = data_.slice(50, 400);
   return data_;
 }
 //Read the data
 async function render() {
- data = await loadCSV("../assets/datasets/us-population-state-age.csv");
+ data = await loadCSV("../assets/datasets/cars-2.csv");
   // List of groups (here I have one group per column)
   let allGroup = new Set(d3.map(data, d => d.name));
   console.log(allGroup)
@@ -125,7 +124,7 @@ async function render() {
 
   // Add X axis --> it is a date format
   x = d3.scaleLinear()
-    .domain(d3.extent(data, function(d) { return d.year; }))
+    .domain(d3.extent(data, d => d.cx))
     .range([ 0, width ]);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -133,7 +132,7 @@ async function render() {
 
   // Add Y axis
   y = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) { return +d.n; })])
+    .domain(d3.extent(data,  d => d.cy))
     .range([ height, 0 ]);
   svg.append("g")
     .call(d3.axisLeft(y));
@@ -144,8 +143,8 @@ async function render() {
   .append("path")
     .datum(data.filter(function(d){return d.name==allGroup[0]}))
     .attr("d", d3.line()
-      .x(function(d) { return x(d.year) })
-      .y(function(d) { return y(+d.n) })
+      .x(function(d) { return x(d.cx) })
+      .y(function(d) { return y(+d.cy) })
     )
     .attr('class', 'line-path')
 }
@@ -162,8 +161,8 @@ function update(selectedGroup) {
       .transition()
       .duration(1000)
       .attr("d", d3.line()
-        .x(function(d) { return x(d.year) })
-        .y(function(d) { return y(+d.n) })
+        .x(function(d) { return x(d.cx) })
+        .y(function(d) { return y(+d.cy) })
       )
 }
 
