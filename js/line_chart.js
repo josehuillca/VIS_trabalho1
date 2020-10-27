@@ -22,7 +22,7 @@ export class Line {
 
     // Add X axis --> it is a date format
     this.xScale = d3.scaleLinear()
-      .domain(d3.extent(this.data, d => d.cx_line))
+      .domain([1970, 1985])
       .range([this.config.left, this.config.width - this.config.right]);
     svg.append("g")
       .attr("transform", `translate(0,${this.config.height - this.config.bottom})`)
@@ -55,6 +55,7 @@ export class Line {
   }
 
   updateChart(selectedGroup){
+      
     // Create new data with the selection?
     let dataFilter = this.data.filter(function(d){return d.name==selectedGroup})
 

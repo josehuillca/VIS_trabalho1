@@ -16,7 +16,14 @@ async function getDatasetModule(selectObject) {
       await dados.loadCSV(value);
       chart.setData(dados.getData(ini, fin));
       let svg = base.getSvg();
-      chart.updateChart(svg);
+      if (currrentChart==='line') {
+        let selected_option = $("#column_chart :selected").text();
+        chart.updateChart(selected_option);
+      }
+      else{
+        chart.updateChart(svg);
+      }
+      
     }
     else {
       main(value);
@@ -60,8 +67,13 @@ function selectTypeChart(typeChart) {
     base.createMargins();
   }
   if (typeChart==='bar'){
-    ini = 0;
-    fin = 50;
+    ini = 10;
+    fin = 40;
+    if(configurar===false){
+      $('#xlabelID').val('Horse-power');
+      $('#ylabelID').val('Weight');
+    }
+    configurar = false;
     chart = new Bar(dados.getData(ini, fin), base.getConfig());
     base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
     let svg = base.getSvg();
@@ -71,6 +83,11 @@ function selectTypeChart(typeChart) {
   if (typeChart==='scatter'){
     ini = 0;
     fin = 400;
+    if(configurar===false){
+      $('#xlabelID').val('Horse-power');
+      $('#ylabelID').val('Weight');
+    }
+    configurar = false;
     chart = new Scatterplot(dados.getData(ini, fin), base.getConfig());
     base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
     let svg = base.getSvg();
@@ -80,6 +97,11 @@ function selectTypeChart(typeChart) {
   if (typeChart==='line'){
     ini = 40;
     fin = 400;
+    if(configurar===false){
+      $('#xlabelID').val('Year');
+      $('#ylabelID').val('Weight');
+    }
+    configurar = false;
     chart = new Line(dados.getData(ini, fin), base.getConfig());
     base.createAxisLabel($('#xlabelID').val(), $('#ylabelID').val(), 'Title');
     let svg = base.getSvg();
@@ -121,6 +143,7 @@ window.lineChartDiv = function lineChartDiv(selectObject) {
   if (setColorTypeChart(selectObject)) {
     $('#typechartID').text('Gráfico de linea.');
     selectTypeChart('line');
+    $( "div.warning3" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
   }
 }
 
@@ -137,6 +160,7 @@ window.configButtomDiv = function configButtomDiv(selectObject) {
       right: parseInt($('#rightID').val())
     };
     base.setConfig(confsvg);
+    configurar = true;
     selectTypeChart(currrentChart);
   }
 }
@@ -173,3 +197,4 @@ let chart = null;
 let currrentChart = 'null';
 let ini=0; // Slice data
 let fin=30; // Slice data
+let configurar = false;

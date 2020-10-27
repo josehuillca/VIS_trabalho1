@@ -38,7 +38,12 @@ export class Bar {
             this.xScale.domain(d3.range(this.data.length))
             this.xAxis.call(d3.axisBottom(this.xScale)
                               .tickSize(-innerHeight)
-                              .tickPadding(15));
+                              .tickPadding(15))
+                              .selectAll("text")  
+                              .style("text-anchor", "end")
+                              .attr("dx", "-.8em")
+                              .attr("dy", ".15em")
+                              .attr("transform", "rotate(-90)");;
 
             // Update the Y axis
             this.yScale.domain([0, d3.max(this.data, d => d.cy)]);

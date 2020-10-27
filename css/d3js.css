@@ -15,6 +15,12 @@
   border-color: #faebcc;
   display: none;
 }
+.warning3 {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  display: none;
+}
 
 .scrolling-conf{
 	overflow-y: auto;
