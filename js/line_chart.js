@@ -20,7 +20,7 @@ export class Line {
     let innerWidth = this.config.width - this.config.left - this.config.right;
     let innerHeight = this.config.height - this.config.top - this.config.bottom;
 
-    // Add X axis --> it is a date format
+    // Add X axis --> vamos manter o eixo X constantemente
     this.xScale = d3.scaleLinear()
       .domain([1970, 1985])
       .range([this.config.left, this.config.width - this.config.right]);
@@ -55,8 +55,7 @@ export class Line {
   }
 
   updateChart(selectedGroup){
-      
-    // Create new data with the selection?
+    // Create new data with the selection
     let dataFilter = this.data.filter(function(d){return d.name==selectedGroup})
 
     // Give these new data to update line

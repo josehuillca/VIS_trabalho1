@@ -56,9 +56,9 @@ export class Bar {
             .data(this.data)
 
             u.enter()
-                  .append("rect") // Add a new rect for each new elements
-                  .merge(u) // get the already existing elements as well
-                  .transition() // and apply changes to all of them
+                  .append("rect") // Adicione um novo rect para cada novo elemento
+                  .merge(u) // obter os elementos já existentes também
+                  .transition() // e aplicar mudanças a todos eles
                   .duration(1000)
                   .attr("x", (d, i) => this.xScale(i))
                   .attr("y", d => this.yScale(d.cy))
@@ -66,7 +66,7 @@ export class Bar {
                   .attr("height", d => this.yScale(0) - this.yScale(d.cy))
                   .attr("fill", "#69b3a2")
 
-            // If less group in the new dataset, I delete the ones not in use anymore
+            // Se houver menos grupo no novo conjunto de dados, excluo aqueles que não estão mais em uso
             u.exit().remove()
       }
 }
